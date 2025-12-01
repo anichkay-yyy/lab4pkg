@@ -1,0 +1,233 @@
+.App {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.App-header {
+  background-color: #282c34;
+  padding: 30px;
+  color: white;
+  margin-bottom: 30px;
+  border-radius: 12px;
+  text-align: center;
+}
+
+.App-header h1 {
+  margin: 0 0 10px 0;
+  font-size: 2.5em;
+}
+
+.main-content {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+}
+
+.left-panel {
+  flex: 0 0 350px;
+  min-width: 280px;
+  max-width: 400px;
+  overflow-y: auto;
+  max-height: 90vh;
+}
+
+.controls {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  margin-bottom: 20px;
+  overflow: hidden;
+  word-wrap: break-word;
+}
+
+.control-group {
+  margin-bottom: 15px;
+}
+
+.control-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+  word-break: break-word;
+  overflow-wrap: break-word;
+}
+
+.control-group input[type="radio"] {
+  margin-right: 8px;
+}
+
+.inputs-line, .inputs-circle {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin: 15px 0;
+}
+
+.inputs-line div, .inputs-circle div {
+  display: flex;
+  flex-direction: column;
+}
+
+.inputs-line label, .inputs-circle label {
+  font-size: 0.9em;
+  margin-bottom: 3px;
+}
+
+.inputs-line input, .inputs-circle input {
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.selected-points {
+  background: #f8f9fa;
+  padding: 10px;
+  border-radius: 4px;
+  margin: 10px 0;
+  font-size: 0.9em;
+  word-break: break-word;
+  overflow: hidden;
+}
+
+.buttons {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.buttons button {
+  padding: 12px 20px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+  transition: all 0.2s;
+}
+
+.buttons button[type="submit"] {
+  background: #4CAF50;
+  color: white;
+}
+
+.buttons button[type="submit"]:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+.buttons button:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.buttons button:nth-child(2) {
+  background: #f44336;
+  color: white;
+}
+
+.buttons button:nth-child(3) {
+  background: #2196F3;
+  color: white;
+}
+
+.stats {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  overflow: hidden;
+  word-wrap: break-word;
+}
+
+.stats h3, .stats h4 {
+  margin-top: 0;
+  color: #333;
+}
+
+.comparison-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 15px 0;
+}
+
+.comparison-table th,
+.comparison-table td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.comparison-table th {
+  background: #f8f9fa;
+  font-weight: bold;
+}
+
+.bar-chart {
+  margin-top: 20px;
+}
+
+.bar-container {
+  margin-bottom: 10px;
+}
+
+.bar {
+  height: 20px;
+  border-radius: 4px;
+  margin-bottom: 4px;
+}
+
+.canvas-container {
+  flex: 2;
+  min-width: 0;
+}
+
+.canvas {
+  width: 100%;
+  height: 600px;
+  border: 2px solid #333;
+  border-radius: 12px;
+  background: white;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+}
+
+@media (max-width: 1024px) {
+  .main-content {
+    flex-direction: column;
+  }
+  
+  .canvas {
+    height: 500px;
+  }
+}
+
+@media (max-width: 768px) {
+  .inputs-line, .inputs-circle {
+    grid-template-columns: 1fr;
+  }
+  
+  .buttons {
+    flex-direction: column;
+  }
+}
+
+.comparison-table tr:hover {
+  background-color: #f5f5f5;
+}
+
+.bar {
+  background: linear-gradient(90deg, var(--bar-color, #4CAF50), #81C784);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+@media (max-width: 768px) {
+  .comparison-table {
+    font-size: 0.85em;
+  }
+  
+  .bar-container span {
+    font-size: 0.8em;
+  }
+}
