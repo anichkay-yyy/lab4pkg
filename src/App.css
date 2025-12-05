@@ -68,6 +68,8 @@
 .inputs-line div, .inputs-circle div {
   display: flex;
   flex-direction: column;
+  min-width: 0;
+  overflow: hidden;
 }
 
 .inputs-line label, .inputs-circle label {
@@ -80,6 +82,9 @@
   border: 1px solid #ddd;
   border-radius: 4px;
   font-size: 14px;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 100%;
 }
 
 .selected-points {

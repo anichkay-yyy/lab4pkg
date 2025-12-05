@@ -4,14 +4,12 @@ const Controls = ({
   algorithm,
   onAlgorithmChange,
   mode,
-  onModeChange,
   lineInputs,
   circleInputs,
   onInputChange,
   selectedPoints,
   onDraw,
   onClear,
-  onCompareAll,
   showGrid,
   onGridChange
 }) => {
@@ -26,33 +24,44 @@ const Controls = ({
     <form onSubmit={handleSubmit} className="controls">
       <div className="control-group">
         <label>Алгоритм:</label>
-        <select value={algorithm} onChange={(e) => onAlgorithmChange(e.target.value)}>
-          <option value="stepByStep">Пошаговый алгоритм</option>
-          <option value="dda">Алгоритм ЦДА</option>
-          <option value="bresenhamLine">Брезенхем (линия)</option>
-          <option value="bresenhamCircle">Брезенхем (окружность)</option>
-        </select>
-      </div>
-
-      <div className="control-group">
-        <label>
-          <input
-            type="radio"
-            value="line"
-            checked={mode === 'line'}
-            onChange={(e) => onModeChange(e.target.value)}
-          />
-          Линия
-        </label>
-        <label>
-          <input
-            type="radio"
-            value="circle"
-            checked={mode === 'circle'}
-            onChange={(e) => onModeChange(e.target.value)}
-          />
-          Окружность
-        </label>
+        <div className="algorithm-radios">
+          <label>
+            <input
+              type="radio"
+              value="stepByStep"
+              checked={algorithm === 'stepByStep'}
+              onChange={(e) => onAlgorithmChange(e.target.value)}
+            />
+            Пошаговый алгоритм
+          </label>
+          <label>
+            <input
+              type="radio"
+              value="dda"
+              checked={algorithm === 'dda'}
+              onChange={(e) => onAlgorithmChange(e.target.value)}
+            />
+            Алгоритм ЦДА
+          </label>
+          <label>
+            <input
+              type="radio"
+              value="bresenhamLine"
+              checked={algorithm === 'bresenhamLine'}
+              onChange={(e) => onAlgorithmChange(e.target.value)}
+            />
+            Брезенхем (линия)
+          </label>
+          <label>
+            <input
+              type="radio"
+              value="bresenhamCircle"
+              checked={algorithm === 'bresenhamCircle'}
+              onChange={(e) => onAlgorithmChange(e.target.value)}
+            />
+            Брезенхем (окружность)
+          </label>
+        </div>
       </div>
 
       <div className="control-group">
@@ -112,7 +121,6 @@ const Controls = ({
       <div className="buttons">
         <button type="submit">Нарисовать</button>
         <button type="button" onClick={onClear}>Очистить</button>
-        <button type="button" onClick={onCompareAll}>Сравнить все</button>
       </div>
     </form>
   );

@@ -16,11 +16,8 @@ const ALGORITHMS = {
   bresenhamCircle,
 };
 
-const LINE_ALGOS = ['stepByStep', 'dda', 'bresenhamLine'];
-
 function App() {
   const [algorithm, setAlgorithm] = useState('stepByStep');
-  const [mode, setMode] = useState('line');
   const [showGrid, setShowGrid] = useState(true);
   const [lineInputs, setLineInputs] = useState({x1: 0, y1: 0, x2: 10, y2: 10});
   const [circleInputs, setCircleInputs] = useState({xc: 0, yc: 0, r: 10});
@@ -28,7 +25,9 @@ function App() {
   const [currentResult, setCurrentResult] = useState(null);
   const [allResults, setAllResults] = useState([]);
   const [results, setResults] = useState([]);
-  const [scale, setScale] = useState(25);
+  
+  // Автоматическое определение режима на основе алгоритма
+  const mode = algorithm === 'bresenhamCircle' ? 'circle' : 'line';
 
   const handleInputChange = useCallback((inputMode, field, value) => {
     if (inputMode === 'line') {
@@ -67,11 +66,6 @@ function App() {
     const params = getParams();
     let result;
     
-    if (mode === 'circle' && algorithm !== 'bresenhamCircle') {
-      alert('Окружность только Брезенхемом');
-      return;
-    }
-    
     if (mode === 'line') {
       const [x0, y0, x1, y1] = params;
       result = ALGORITHMS[algorithm](x0, y0, x1, y1);
@@ -92,25 +86,6 @@ function App() {
     setSelectedPoints([]);
   }, []);
 
-  const compareAll = useCallback(() => {
-    const params = getParams();
-    const newResults = [];
-    
-    if (mode === 'line') {
-      LINE_ALGOS.forEach(alg => {
-        const [x0, y0, x1, y1] = params;
-        newResults.push(ALGORITHMS[alg](x0, y0, x1, y1));
-      });
-    } else {
-      const [xc, yc, r] = params;
-      newResults.push(ALGORITHMS.bresenhamCircle(xc, yc, r));
-    }
-    
-    setAllResults(newResults);
-    setResults(newResults);
-    if (newResults.length) setCurrentResult(newResults[0]);
-  }, [mode, getParams]);
-
   return (
     <div className="App">
       <header className="App-header">
@@ -124,14 +99,12 @@ function App() {
             algorithm={algorithm}
             onAlgorithmChange={setAlgorithm}
             mode={mode}
-            onModeChange={setMode}
             lineInputs={lineInputs}
             circleInputs={circleInputs}
             onInputChange={handleInputChange}
             selectedPoints={selectedPoints}
             onDraw={draw}
             onClear={clear}
-            onCompareAll={compareAll}
             showGrid={showGrid}
             onGridChange={setShowGrid}
           />
@@ -143,8 +116,6 @@ function App() {
             results={results}
             currentPoints={selectedPoints}
             onPointSelect={handlePointSelect}
-            scale={scale}
-            onScaleChange={setScale}
             showGrid={showGrid}
           />
         </div>
