@@ -1,0 +1,19 @@
+# Build artifacts
+build/*.o
+build/*.gcno
+build/*.gcda
+build/test_*
+build/coverage*
+build/*.dSYM/
+*.gcov
+
+# Binary
+bin/perfume_bazaar
+
+# Database files
+*.db
+
+# OS files
+.DS_Store
+*.swp
+*~

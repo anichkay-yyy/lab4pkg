@@ -1,0 +1,30 @@
+@startuml sequence_deal
+title Диаграмма последовательности — Добавление сделки
+
+actor "Пользователь" as User
+participant "main.c" as Main
+participant "deal.c" as Deal
+participant "functions.c" as Func
+database "SQLite" as DB
+
+User -> Main : Выбрать "Добавить сделку"
+Main -> User : Запросить данные
+User -> Main : Ввести данные сделки\n(дата, товар, вид, кол-во,\nмаклер, покупатель)
+Main -> Deal : deal_insert(db, date, name,\ntype, qty, broker_id, buyer)
+Deal -> DB : INSERT INTO PB_DEALS\nVALUES(?, ?, ?, ?, ?, ?)
+DB --> Deal : SQLITE_DONE
+Deal --> Main : deal_id
+
+alt deal_id > 0
+    Main -> Func : fn_update_broker_stats(db, deal_id)
+    Func -> DB : SELECT broker_id, quantity_sold,\nquantity_sold * unit_price\nFROM PB_DEALS JOIN PB_GOODS
+    DB --> Func : broker_id, qty, sum
+    Func -> DB : INSERT OR UPDATE PB_BROKER_STATS
+    DB --> Func : OK
+    Func --> Main : return 0
+    Main --> User : "Сделка добавлена (ID: N)\nСтатистика обновлена"
+else deal_id = -1
+    Main --> User : "Ошибка добавления сделки"
+end
+
+@enduml

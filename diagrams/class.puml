@@ -1,0 +1,103 @@
+@startuml class
+title Диаграмма классов — Парфюмерный базар
+
+class Database {
+    -db: sqlite3*
+    +open(path: string): int
+    +close(): int
+    +init(): int
+    +execute(sql: string): int
+}
+
+class Auth {
+    +hash_password(password: string): ulong
+    +login(db, username, password, user): int
+    +register(db, username, password, role, broker_id): int
+}
+
+class User {
+    +id: int
+    +username: string
+    +role: string
+    +broker_id: int
+}
+
+class Broker {
+    +id: int
+    +surname: string
+    +address: string
+    +birth_year: int
+    --
+    +insert(db, surname, address, year): int
+    +update(db, id, surname, address, year): int
+    +delete(db, id): int
+    +list(db): int
+    +get(db, id): int
+    +count(db): int
+}
+
+class Goods {
+    +id: int
+    +name: string
+    +type: string
+    +unit_price: double
+    +supplier_firm: string
+    +expiration_date: string
+    +quantity_supplied: int
+    --
+    +insert(db, ...): int
+    +update(db, id, ...): int
+    +delete(db, id): int
+    +list(db): int
+    +count(db): int
+}
+
+class Deal {
+    +id: int
+    +deal_date: string
+    +product_name: string
+    +product_type: string
+    +quantity_sold: int
+    +broker_id: int
+    +buyer_firm: string
+    --
+    +insert(db, ...): int
+    +update(db, id, ...): int
+    +delete(db, id): int
+    +list(db, broker_id): int
+    +count(db): int
+}
+
+class Queries {
+    +product_sales_by_period(db, name, from, to): int
+    +product_buyers(db, name): int
+    +top_demand_type(db): int
+    +top_broker(db): int
+    +supplier_brokers(db): int
+}
+
+class Functions {
+    +update_broker_stats(db, deal_id): int
+    +consolidate_goods(db, date): int
+    +broker_deals_on_date(db, date, broker_id): int
+}
+
+class BrokerStats {
+    +broker_id: int
+    +total_quantity_sold: int
+    +total_deal_sum: double
+}
+
+Auth --> User : creates
+Auth --> Database : uses
+Broker --> Database : uses
+Goods --> Database : uses
+Deal --> Database : uses
+Deal --> Broker : references
+Queries --> Database : uses
+Functions --> Database : uses
+Functions --> BrokerStats : updates
+Deal "1" --> "1" Goods : product_name
+BrokerStats "1" --> "1" Broker : broker_id
+
+@enduml

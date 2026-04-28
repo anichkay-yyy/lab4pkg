@@ -1,0 +1,33 @@
+@startuml deployment
+title Диаграмма развертывания — Парфюмерный базар
+
+node "Компьютер пользователя" {
+    artifact "perfume_bazaar" as App
+    database "perfume_bazaar.db\n(SQLite)" as DB
+    App --> DB : sqlite3 API
+}
+
+node "GitHub" {
+    node "Репозиторий 1\n(документация)" {
+        artifact "Wiki pages" as Wiki
+        artifact "GitHub Pages\n(/docs)" as Pages
+        artifact "GitHub Projects\n(Kanban)" as Kanban
+    }
+    node "Репозиторий 2\n(код)" {
+        artifact "src/, includes/,\ntests/, sql/" as Code
+        artifact "Makefile" as Make
+        node "GitHub Actions" {
+            artifact "ci.yml" as CI
+            CI --> Code : build & test
+            CI --> Make : make check\nmake distcheck
+        }
+    }
+}
+
+node "Codecov" as Codecov {
+    artifact "Coverage Report" as Coverage
+}
+
+CI --> Codecov : upload coverage.info
+
+@enduml
